@@ -1,9 +1,9 @@
 LivingCreature = require("./LivingCreature")
-class Lightning extends LivingCreature {
+module.exports = class Lightning extends LivingCreature {
     
     eat() {
         var emptyCells = this.chooseCell(1);
-        var newCell = random(emptyCells);
+        var newCell = emptyCells[Math.floor(Math.random() * emptyCells.length)]
         if(newCell) {
             this.energy++
             var newX = newCell[0];

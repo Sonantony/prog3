@@ -1,8 +1,15 @@
-const express = require('express');
-const app = express();
-const http = require('http');
-const server = http.createServer(app);
+var express = require('express');
+var app = express();
+var server = require('http').createServer(app);
 var io = require('socket.io')(server);
+var fs = require("fs");
+
+app.use(express.static("."));
+
+app.get('/', function (req, res) {
+    res.redirect('index.html');
+});
+server.listen(3000);
 
 Grass = require("./grass")
 GrassEater = require("./grasseater")
@@ -10,17 +17,19 @@ Hunter = require("./hunter")
 Lightning = require("./lightning")
 Predator = require("./predator")
 Water = require("./water")
-app.get('/', (req, res) => {
-    res.sendFile(__dirname + '/index.html');
-  });
-  
+
+
 //   io.on('connection', (socket) => {
-//     console.log('a user connected');
-//   });
-  
-  server.listen(3000, () => {
-    console.log('listening on *:3000');
-  });
+    //     console.log('a user connected');
+    //   });
+    
+    grassArr = [];
+    grassEaterArr = []
+    predatorArr = []
+    waterArr = []
+    hunterArr = []
+    lightningArr = []
+ 
 
 function generate(matLen,gr,grEat,pr,wt,hun,lt) {
     let matrix = []
@@ -76,10 +85,11 @@ function generate(matLen,gr,grEat,pr,wt,hun,lt) {
     return matrix
 }
 
-function setup() {
-    frameRate(5);
-    createCanvas(matrix[0].length * side, matrix.length * side);
-    background('#acacac');
+matrix = generate(15, 45, 8, 15, 40, 20, 5)
+io.sockets.emit("send matrix", matrix);
+
+
+function createObject(matrix){
 
     for (var y = 0; y < matrix.length; y++) {
         for (var x = 0; x < matrix[y].length; x++) {
@@ -88,14 +98,14 @@ function setup() {
                 let gr = new Grass(x, y)
                 grassArr.push(gr)
             } else if (matrix[y][x] == 2) {
-                let gr = new GrassEater(x, y)
-                grassEaterArr.push(gr)
+                let grEat = new GrassEater(x, y)
+                grassEaterArr.push(grEat)
             }else if (matrix[y][x] == 3) {
-                let gr = new Predator(x, y)
-                predatorArr.push(gr)
+                let pr = new Predator(x, y)
+                predatorArr.push(pr)
             }else if (matrix[y][x] == 4) {
-                let gr = new Water(x, y)
-                waterArr.push(gr)
+                let wt = new Water(x, y)
+                waterArr.push(wt)
             }
             else if (matrix[y][x] == 5) {
                 let hun = new Hunter(x, y)
@@ -107,8 +117,9 @@ function setup() {
             }
         }
     }
-
+    io.sockets.emit("send matrix", matrix);
 }
+
 function game() {
 for(var i in grassArr){
     grassArr[i].mul()
@@ -129,7 +140,7 @@ for(var i in grassArr){
         lightningArr[i].eat()
      }
 }
-io.sockets.emit("send matrix",generate(15,45,8,15,40,20,5) ); // todo f
+io.sockets.emit("send matrix",matrix ); // todo f
 setInterval(game, 1000)
 
 //io.sockets.emit('send dd', generate(matLen,gr,grEat,pr,wt,hun,lt))
@@ -137,9 +148,3 @@ setInterval(game, 1000)
 io.on('connection', function (socket) {
     createObject(matrix)
 })
-grassArr = [];
-grassEaterArr = []
-predatorArr = []
-waterArr = []
-hunterArr = []
-lightningArr = []

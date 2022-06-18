@@ -1,5 +1,5 @@
 LivingCreature = require("./LivingCreature")
-class Hunter extends LivingCreature {
+module.exports = class Hunter extends LivingCreature {
     constructor(x, y, index){
         super(x, y, index);
         this.energy = 8;
@@ -23,7 +23,7 @@ class Hunter extends LivingCreature {
 
     mul() {
         var emptyCells = this.chooseCell(0);
-        var newCell = random(emptyCells);
+        var newCell = emptyCells[Math.floor(Math.random() * emptyCells.length)]
 
         if (newCell) {
             var newX = newCell[0];
@@ -39,7 +39,7 @@ class Hunter extends LivingCreature {
     move() {
         this.energy--
         var emptyCells = this.chooseCell(0);
-        var newCell = random(emptyCells);
+        var newCell = emptyCells[Math.floor(Math.random() * emptyCells.length)]
         if(newCell && this.energy >= 0) {
             var newX = newCell[0];
             var newY = newCell[1];
@@ -54,7 +54,7 @@ class Hunter extends LivingCreature {
 
     eat() {
         var emptyCells = this.chooseCell(2,3);
-        var newCell = random(emptyCells);
+        var newCell = emptyCells[Math.floor(Math.random() * emptyCells.length)]
         if(newCell) {
             this.energy+=10
             var newX = newCell[0];

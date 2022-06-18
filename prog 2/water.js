@@ -1,4 +1,5 @@
-class Water extends LivingCreature {
+LivingCreature = require("./LivingCreature")
+module.exports =  class Water extends LivingCreature {
     getNewCoordinates() {
         this.directions = [
             [this.x - 1, this.y - 1],
@@ -18,7 +19,7 @@ class Water extends LivingCreature {
     }
     eat() {
         var emptyCells = this.chooseCell(3);
-        var newCell = random(emptyCells);
+        var newCell = emptyCells[Math.floor(Math.random() * emptyCells.length)]
         if(newCell) {
             this.energy++
             var newX = newCell[0];
