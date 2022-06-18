@@ -1,3 +1,4 @@
+LivingCreature = require("./LivingCreature")
 class Lightning extends LivingCreature {
     
     eat() {
