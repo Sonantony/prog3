@@ -1,3 +1,5 @@
+var socket = io();
+
 function generate(matLen,gr,grEat,pr,wt,hun,lt) {
     let matrix = []
     for (let i = 0; i < matLen; i++) {
@@ -53,7 +55,7 @@ function generate(matLen,gr,grEat,pr,wt,hun,lt) {
 }
 
 
-let matrix = generate(15,45,8,15,40,20,5)
+// let matrix = generate(15,45,8,15,40,20,5)
 
 
 var side = 15;
@@ -64,41 +66,8 @@ let waterArr = []
 let hunterArr = []
 let lightningArr = []
 
-function setup() {
-    frameRate(5);
-    createCanvas(matrix[0].length * side, matrix.length * side);
-    background('#acacac');
 
-    for (var y = 0; y < matrix.length; y++) {
-        for (var x = 0; x < matrix[y].length; x++) {
-
-            if (matrix[y][x] == 1) {
-                let gr = new Grass(x, y)
-                grassArr.push(gr)
-            } else if (matrix[y][x] == 2) {
-                let gr = new GrassEater(x, y)
-                grassEaterArr.push(gr)
-            }else if (matrix[y][x] == 3) {
-                let gr = new Predator(x, y)
-                predatorArr.push(gr)
-            }else if (matrix[y][x] == 4) {
-                let gr = new Water(x, y)
-                waterArr.push(gr)
-            }
-            else if (matrix[y][x] == 5) {
-                let hun = new Hunter(x, y)
-                hunterArr.push(hun)
-            }
-            else if (matrix[y][x] == 6) {
-                let lt = new Lightning(x, y)
-                lightningArr.push(lt)
-            }
-        }
-    }
-
-}
-
-function draw() {
+function nkarel(matrix) {
 
     for (var y = 0; y < matrix.length; y++) {
         for (var x = 0; x < matrix[y].length; x++) {
@@ -149,3 +118,9 @@ function draw() {
             lightningArr[i].eat()
          }
     }
+
+    setInterval(
+        function () {
+        socket.on('send matrix', nkarel)
+        },1000
+    )

@@ -1,3 +1,4 @@
+LivingCreature = require("./LivingCreature")
 class Grass extends LivingCreature {
     
     mul() {

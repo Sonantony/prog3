@@ -1,3 +1,4 @@
+LivingCreature = require("./LivingCreature")
 class GrassEater extends LivingCreature {
     constructor(x, y, index){
         super(x, y, index);
@@ -5,7 +6,7 @@ class GrassEater extends LivingCreature {
     }
    getNewCoordinates() {
        this.directions = [
-           [this.x - 1, this.y - 1],
+           [this.x - 1, this.y - 1],s
            [this.x, this.y - 1],
            [this.x + 1, this.y - 1],
            [this.x - 1, this.y],
