@@ -51,10 +51,10 @@ function nkarell(matrix) {
         socket.on('send matrix', nkarell)
         },1000
     )
-    
+
     var socket = io()
 
     btn = document.getElementById("")
    function hey(){
-       socket.emit("barev")
+        socket.emit("barev")
    }
