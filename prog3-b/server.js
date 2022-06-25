@@ -7,11 +7,10 @@ var fs = require("fs");
 
 matrix = []
 app.use(express.static("."));
-
 app.get('/', function (req, res) {
     res.redirect('index.html');
 });
-server.listen(3008);
+server.listen(3010);
 
 Grass = require("./grass")
 GrassEater = require("./grasseater")
@@ -143,6 +142,7 @@ function game() {
         lightningArr[i].eat()
     }
     io.sockets.emit("send matrix", matrix); // todo f
+   
 }
 setInterval(game, 1000)
 
@@ -220,6 +220,65 @@ function addGrassEater() {
 io.on("connection", function (socket) {
 
     socket.on("vuy", addGrassEater)
+}
+
+)
+//  count = 1
+//  let isNight = false
+//io.sockets.emit("uxarkel", isNight);
+
+//  function night(){
+//      isNight = true
+//      io.sockets.emit('message', {'data': isNight});
+//     console.log(isNight)
+//  }
+//  function light(){
+//     console.log()
+//     isNight = false
+//     io.sockets.emit('message2', {'data': isNight});
+//    console.log(isNight)
+// }
+//  io.on("connection", function (socket) {
+
+//      socket.on("vuyy", night)
+//  }
+//  )
+count = 1
+function night(){
+    for (var y = 0; y < matrix.length; y++) {
+        for (var x = 0; x < matrix[y].length; x++) {
+
+            if (matrix[y][x] == 0) {
+                fill("green")
+            }
+            else if (matrix[y][x] == 1) {
+                fill("#green");
+            }
+            else if (matrix[y][x] == 2) {
+                fill("green");
+            }
+            else if (matrix[y][x] == 3) {
+                fill("green");
+            }
+            else if (matrix[y][x] == 4) {
+                fill("green");
+            }
+            else if (matrix[y][x] == 5) {
+                fill("green");
+            }
+            else if (matrix[y][x] == 6) {
+                fill("green");
+            }
+            rect(x * side, y * side, side, side);
+
+
+        }
+    }
+    console.log("eeop")
+}
+io.on("connection", function (socket) {
+
+    socket.on("vuyuy", night)
 }
 
 )

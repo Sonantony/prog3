@@ -12,16 +12,20 @@ function setup() {
     createCanvas(30 * side, 30 * side);
     background('#acacac');
 }
+let a
 function nkarell(matrix) {
+    // console.log(a, "drawrwef")
     // console.log(matrix);
     for (var y = 0; y < matrix.length; y++) {
         for (var x = 0; x < matrix[y].length; x++) {
 
-            if (matrix[y][x] == 1) {
-                fill("green");
+            if (matrix[y][x] == 0) {
+                // if(a == false)
+                fill("acacac")
+                // else {fill("red")}
             }
-            else if (matrix[y][x] == 0) {
-                fill("#acacac");
+            else if (matrix[y][x] == 1) {
+                fill("#green");
             }
             else if (matrix[y][x] == 2) {
                 fill("yellow");
@@ -46,11 +50,29 @@ function nkarell(matrix) {
 
 }
 
+socket.on('message', function(ev){
+    console.log("connected clients " + ev.data);
+    a = ev.data
+});
+
+socket.on('message2', function(ev){
+    console.log("connected ytjrtyj " + ev.data);
+    a = ev.data
+});
+
     setInterval(
         function () {
         socket.on('send matrix', nkarell)
         },1000
     )
+    // setInterval(
+    //     function () {
+    //     socket.on('uxarkel', isNight)
+    //     console.log(isNight)
+    //     },1000
+       
+    // )
+    // console.log(isNight)
 
     var socket = io()
 
@@ -70,3 +92,16 @@ function nkarell(matrix) {
   function hello(){
        socket.emit("vuy")
   }
+  var socket = io()
+
+   btn = document.getElementById("")
+  function heo(){
+       socket.emit("vuyy")
+  }
+
+  var socket = io()
+
+  btn = document.getElementById("")
+ function ho(){
+      socket.emit("vuyy")
+ }
